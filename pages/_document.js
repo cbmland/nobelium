@@ -3,6 +3,7 @@ import cn from 'classnames'
 import { config } from '@/lib/server/config'
 import tailwind from '@/tailwind.config'
 import CJK from '@/lib/cjk'
+import Script from 'next/script'
 class MyDocument extends Document {
   static async getInitialProps (ctx) {
     const initialProps = await Document.getInitialProps(ctx)
@@ -115,14 +116,19 @@ class MyDocument extends Document {
             }
           `}
           </style>
-          <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGLNH2Q5PP"></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments)}
-            gtag('js', new Date());
+          <Script
+            src="https://www.googletagmanager.com/gtag/js?id=G-LGLNH2Q5PP"
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments);}
+              gtag('js', new Date());
 
-            gtag('config', 'G-LGLNH2Q5PP');
-          </script>
+              gtag('config', 'G-LGLNH2Q5PP');
+            `}
+          </Script>
         </Head>
         <body className="bg-day dark:bg-night">
           <Main />
